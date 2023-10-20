@@ -1,5 +1,8 @@
 const router = require("express").Router();
-// router.use("/");
+const viewroutes = require("../view_routes.js");
+
+router.use("/", viewroutes);
+
 router.use((req, res) => {
     res.send("landing page");
 });
