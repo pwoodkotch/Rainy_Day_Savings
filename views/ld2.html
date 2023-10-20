@@ -6,82 +6,87 @@
         <title>Document</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-cyan-300">
-            <div class="flex h-16 items-center justify-between">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <img
-                            class="h-8 w-8"
-                            src="../Images/RainyDayLightningLogo.png"
-                            alt="Your Company"
-                        />
-                    </div>
-                    <div class="hidden md:block sm:hidden">
-                        <div class="ml-5 flex items-baseline space-x-4">
-                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <h2 class="font-serif text-2xl">
-                                <b>RainyDay Savings</b>
-                            </h2>
-                            <a
-                                href="#"
-                                class="bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium"
-                                aria-current="page"
-                                >Free Calculator</a
-                            >
-                            <a
-                                href="#"
-                                class="text-gray-500 hover:bg-gray-400 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                                >Support</a
-                            >
+    <body class="bg-gradient-to-r from-cyan-500 to-blue-500">
+        <div>
+            <div class="mx-auto w-full px-4 sm:px-6 lg:px-8 bg-gray-100">
+                <div class="flex h-16 items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <img
+                                class="h-8 w-8"
+                                src="../Images/RainyDayLightningLogo.png"
+                                alt="Your Company"
+                            />
+                        </div>
+                        <div class="hidden md:block sm:hidden">
+                            <div class="ml-5 flex items-baseline space-x-4">
+                                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                                <h2 class="font-serif text-2xl">
+                                    <b>RainyDay Savings</b>
+                                </h2>
+                                <a
+                                    href="#"
+                                    class="bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium"
+                                    aria-current="page"
+                                    >Free Calculator</a
+                                >
+                                <a
+                                    href="#"
+                                    class="text-gray-500 hover:bg-gray-400 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                                    >Support</a
+                                >
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-4 flex items-center md:ml-6">
-                        <button
-                            type="button"
-                            class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        >
-                            <span class="absolute -inset-1.5"></span>
-                            <span class="sr-only">View notifications</span>
-                            <svg
-                                class="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                aria-hidden="true"
+                    <div class="hidden md:block">
+                        <div class="ml-4 flex items-center md:ml-6">
+                            <button
+                                type="button"
+                                class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                                />
-                            </svg>
-                        </button>
-
-                        <!-- Profile dropdown -->
-                        <div class="relative ml-3">
-                            <div>
-                                <button
-                                    type="button"
-                                    class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                    id="user-menu-button"
-                                    aria-expanded="false"
-                                    aria-haspopup="true"
+                                <span class="absolute -inset-1.5"></span>
+                                <span class="sr-only">View notifications</span>
+                                <svg
+                                    class="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    aria-hidden="true"
                                 >
-                                    <span class="absolute -inset-1.5"></span>
-                                    <span class="sr-only">Open user menu</span>
-                                    <img
-                                        class="h-8 w-8 rounded-full"
-                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                        alt=""
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
                                     />
-                                </button>
-                            </div>
+                                </svg>
+                            </button>
 
-                            <!--
+                            <!-- Profile dropdown -->
+                            <div class="relative ml-3">
+                                <div>
+                                    <button
+                                        type="button"
+                                        class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                        id="user-menu-button"
+                                        aria-expanded="false"
+                                        aria-haspopup="true"
+                                    >
+                                        <span
+                                            class="absolute -inset-1.5"
+                                        ></span>
+                                        <span class="sr-only"
+                                            >Open user menu</span
+                                        >
+                                        <img
+                                            class="h-8 w-8 rounded-full"
+                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            alt=""
+                                        />
+                                    </button>
+                                </div>
+
+                                <!--
             Dropdown menu, show/hide based on menu state.
     
             Entering: "transition ease-out duration-100"
@@ -91,86 +96,277 @@
               From: "transform opacity-100 scale-100"
               To: "transform opacity-0 scale-95"
           -->
-                            <div
-                                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                role="menu"
-                                id="user-menu-tabs"
-                                aria-orientation="vertical"
-                                aria-labelledby="user-menu-button"
-                                tabindex="-1"
-                            >
-                                <!-- Active: "bg-gray-100", Not Active: "" -->
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
+                                <div
+                                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    role="menu"
+                                    id="user-menu-tabs"
+                                    aria-orientation="vertical"
+                                    aria-labelledby="user-menu-button"
                                     tabindex="-1"
-                                    id="user-menu-item-0"
-                                    >Your Profile</a
                                 >
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="user-menu-item-1"
-                                    >Settings</a
-                                >
-                                <a
-                                    href="./signUp.html"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="user-menu-item-2"
-                                    >Sign in</a
-                                >
+                                    <!-- Active: "bg-gray-100", Not Active: "" -->
+                                    <a
+                                        href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700"
+                                        role="menuitem"
+                                        tabindex="-1"
+                                        id="user-menu-item-0"
+                                        >Your Profile</a
+                                    >
+                                    <a
+                                        href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700"
+                                        role="menuitem"
+                                        tabindex="-1"
+                                        id="user-menu-item-1"
+                                        >Settings</a
+                                    >
+                                    <a
+                                        href="./signUp.html"
+                                        class="block px-4 py-2 text-sm text-gray-700"
+                                        role="menuitem"
+                                        tabindex="-1"
+                                        id="user-menu-item-2"
+                                        >Sign in</a
+                                    >
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="-mr-2 flex md:hidden">
+                        <!-- Mobile menu button -->
+                        <button
+                            type="button"
+                            id="mobile-button"
+                            class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                            aria-controls="mobile-menu"
+                            aria-expanded="false"
+                        >
+                            <span class="absolute -inset-0.5"></span>
+                            <span class="sr-only">Open main menu</span>
+                            <!-- Menu open: "hidden", Menu closed: "block" -->
+                            <svg
+                                class="block h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                                />
+                            </svg>
+                            <!-- Menu open: "block", Menu closed: "hidden" -->
+                            <svg
+                                class="hidden h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <div class="-mr-2 flex md:hidden">
-                    <!-- Mobile menu button -->
-                    <button
-                        type="button"
-                        id="mobile-button"
-                        class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        aria-controls="mobile-menu"
-                        aria-expanded="false"
+            </div>
+            <div
+                class="mx-8 mt-16 max-w-2xl bg-gray-100 rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-10 lg:flex items-center lg:max-w-none"
+            >
+                <div class="p-8 bg sm:p-10 lg:flex-auto">
+                    <h3 class="text-2xl font-bold tracking-tight text-gray-900">
+                        Weekly Savings Calculator
+                    </h3>
+                    <p class="mt-6 text-base leading-7 text-gray-600">
+                        This calculator will show you how much you can save over
+                        time if you commit to a routine deposits.
+                    </p>
+                    <div class="flex space-x-4">
+                        <div class="mt-3 w-25 px-3">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="grid-amount"
+                            >
+                                Amount per week
+                            </label>
+                            <input
+                                class="appearance-none block w-20 bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-900 text-white"
+                                id="grid-amount"
+                                type="text"
+                                placeholder="30"
+                            />
+                        </div>
+                        <div class="mt-3 w-25 px-3">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="grid-days"
+                            >
+                                Goal Amount
+                            </label>
+                            <input
+                                class="appearance-none block w-20 bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-900 text-white"
+                                id="grid-days"
+                                type="text"
+                                placeholder="375"
+                            />
+                        </div>
+                    </div>
+                    <div class="mt-10 flex items-center gap-x-4">
+                        <h4
+                            class="flex-none text-sm font-semibold leading-6 text-green-400"
+                        >
+                            Free Data!
+                        </h4>
+                        <div class="h-px flex-auto bg-gray-100"></div>
+                    </div>
+                    <ul
+                        role="list"
+                        class="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6"
                     >
-                        <span class="absolute -inset-0.5"></span>
-                        <span class="sr-only">Open main menu</span>
-                        <!-- Menu open: "hidden", Menu closed: "block" -->
-                        <svg
-                            class="block h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                            />
-                        </svg>
-                        <!-- Menu open: "block", Menu closed: "hidden" -->
-                        <svg
-                            class="hidden h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
-                    </button>
+                        <li class="flex gap-x-3">
+                            <svg
+                                class="h-6 w-5 flex-none text-green-400"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                            Savings Per Week:
+                            <em class="text-green-400">$50</em>
+                        </li>
+                        <li class="flex gap-x-3">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                class="h-6 w-6 text-red-500"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                            Savings Per Year: ____
+                        </li>
+                        <li class="flex gap-x-3">
+                            <svg
+                                class="h-6 w-5 flex-none text-green-400"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                            Savings Per Month:
+                            <em class="text-green-400">$200</em>
+                        </li>
+                        <li class="flex gap-x-3">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                class="h-6 w-6 text-red-500"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                            How Long to Achieve Goal: ____
+                        </li>
+                    </ul>
                 </div>
+                <div
+                    class="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0"
+                >
+                    <div
+                        class="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16"
+                    >
+                        <div class="mx-auto max-w-xs px-8">
+                            <p class="text-base font-semibold text-gray-600">
+                                Get The Full Rundown
+                            </p>
+                            <p
+                                class="mt-6 flex items-baseline justify-center gap-x-2"
+                            >
+                                <span
+                                    class="text-5xl font-bold tracking-tight text-gray-900"
+                                    >Absolutley Free!</span
+                                >
+                                <!-- <span
+                                        class="text-sm font-semibold leading-6 tracking-wide text-gray-600"
+                                        >USD</span
+                                    > -->
+                            </p>
+                            <a
+                                href="./random.html"
+                                class="mt-10 block w-full rounded-md bg-cyan-400 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                >Sign Up</a
+                            >
+                            <!-- <p class="mt-6 text-xs leading-5 text-gray-600">
+                                    Invoices and receipts available for easy
+                                    company reimbursement
+                                </p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="mx-8 mt-16 max-w-2xl bg-gray-100 rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-10 lg:flex items-center lg:max-w-none"
+        >
+            <img
+                src="../images/istockphoto-1353433807-612x612.jpg"
+                alt=""
+                class="w-full rounded-3xl"
+            />
+        </div>
+        <div
+            class="mx-8 mt-16 max-w-2xl bg-gray-100 rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-10 lg:flex items-center lg:max-w-none"
+        >
+            <div class="p-8 bg sm:p-10 lg:flex-auto">
+                <h3 class="text-2xl font-bold tracking-tight text-gray-900">
+                    Contact Us!
+                </h3>
+                <p class="mt-6 text-base leading-7 text-gray-600">
+                    We'd love to hear from you and help you with any questions
+                    you have!
+                </p>
+                <ul class="mt-6 text-base leading-7 text-gray-600">
+                    <li>
+                        <em><strong>Email:</strong></em> example@test.com
+                    </li>
+                    <li>
+                        <em><strong>Phone:</strong></em> (555)-676-0000
+                    </li>
+                    <li>
+                        <em><strong>Mailing Address:</strong></em> 345 Little
+                        Lane, Detroit, Michigan, 06676
+                    </li>
+                </ul>
             </div>
         </div>
     </body>
