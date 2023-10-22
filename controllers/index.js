@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const viewroutes = require("../view_routes.js");
+const viewroutes = require("./view_routes.js");
 
 router.use("/", viewroutes);
 
