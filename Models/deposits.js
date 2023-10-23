@@ -1,17 +1,25 @@
 const { Model, DataTypes } = require("sequelize");
-const db = require("../config/connetion.js");
+const db = require("../config/connection");
 
-class deposits extends Model {}
+class Deposits extends Model {}
 
-deposits.init({
+Deposits.init({
     deposit_amount: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    depositer_name: {
+    username: {
+        type:DataTypes.STRING,
         references: {
-            model: "user",
-            key: "id",
+            model: "users",
+            key: "username",
         },
     },
-});
+},{
+    modelName:'deposits',
+    sequelize: db,
+    logging: false
+})
+
+
+module.exports = Deposits
