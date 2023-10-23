@@ -1,7 +1,8 @@
 const router = require("express").Router();
+// const session = require("express-session");
 const viewroutes = require("./view_routes.js");
-const { User, Deposits, Target, deposittarget } = require('../Models/');
-const { findAll } = require("../Models/user.js");
+const { User, Deposits, Target, depositstarget } = require('../models/Index.js');
+// const { findAll } = require("../models/User.js");
 // const User = require('../Models/user.js')
 // const Target = require('../Models/target.js')
 // const Deposits = require('../Models/deposits.js')
@@ -20,24 +21,32 @@ router.post('/deposit', async (req,res)=>{
     //     await user.setUser(dposits)
         // return deposittarget.bulkCreate(userarr)
     // }
-})
+});
 router.post('/target', async (req,res)=>{
 
     const target =  await Target.create(req.body)
  
      
- })
+ });
 router.post('/signup',async (req,res)=>{
     try{
-        const user = User.create(req.body)
-        req.session.user_id =user.id
-        res.redirect('/dashboard')
+        const user = await User.create(req.body);
+        console.log("USER:",user);
+        req.session.user_id = user.id;
+        const examp = req.session.user;
+        // req.session.user = user;
+        console.log("SESSION ID:", examp);
+        req.session.save(() => {
+            console.log("AFTER:", req.session.user_id);
+            res.redirect('/dashboard');
+        });
+ 
     }catch(error){
-        req.session.errors = error.errors.map(errobj => errobj.message)
-        res.redirect('/signup')
+        req.session.errors = error.errors.map(errobj => errobj.message);
+        res.redirect('/signup');
 
     }
-})
+});
 router.post('/login', async (req, res) => {
     const user = await User.findOne({
         where: {
@@ -57,15 +66,41 @@ router.post('/login', async (req, res) => {
     }
     console.log('hi')
     req.session.user_id = user.id
-    
+    if(user){
+
+        console.log(req.session.user_id)
+    }
     res.redirect('/dashboard')
-})
+});
 
 
-router.post('/testing',(cro,sro)=>{
+router.post('/addnew', async (cro,sro)=>{
+    // console.log(cro.session)
+    const user = await User.findOne({
+        where: {
+            id: cro.session.user_id
+        }
+    })
+    console.log(user)
+    console.log(cro.body)
+    let started =1
+    let saved = 0
+    let completion = 0
+    const targets = await Target.create({
+        target_amount: cro.body.target_amount,
+        name: cro.body.name,
+        started: started,
+        saved:saved,
+        completion: completion,
+        user_id: cro.session.user_id
+
+
+    })
+    console.log(targets)
+    sro.redirect('/dashboard')
+
     
-    
-})
+});
 router.get('/testing',async (cro,sro)=>{
     const hi = 'hithere'
     console.log('cro',cro.session.user_id)
@@ -81,11 +116,11 @@ router.get('/testing',async (cro,sro)=>{
     })
     console.log("string", user)
     sro.send(user)
-})
+});
 
 router.get("/logout", (req,res) => {
     req.session.destroy;
     res.redirect("/");
-})
+});
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const path = require("path");
-const { User, Deposits, Target } = require('../Models/')
+const { User, Deposits, Target } = require('../models/Index')
 // const hbs = require("../views/hbs/helpers")
 // auth page if user is logged in
 function loggedIn(req, res, next) {
@@ -22,23 +22,19 @@ async function authenticate(req, res, next) {
 
     if(user_id) {
         const user = await User.findByPk(req.session.user_id, {
-            attributes: ['id', 'email']
+            attributes: ['id', 'username']
         })
         req.user = user.get({ plain: true })
     }
 
     next()
 }
-router.get('/',(req,res)=>{
-// We will make adjustment to the names but temporarily its this
-    res.render('savings-calc')
-})
 
-router.get('/addnew',(req,res)=>{
+router.get('/addnew', isAuthenticated, authenticate, (req,res) => {
         res.render('addNew')
 })
 
-router.get('/update',(req,res)=>{      
+router.get('/update', isAuthenticated, authenticate, (req,res)=>{      
         res.render('updateTarget')
 })
 // route for register form
@@ -59,7 +55,7 @@ router.get('/login', loggedIn, authenticate, (req, res) => {
 
 router.get("/dashboard", async (req, res) => {
     const hi = 'hellothere'
-    const user = await User.findAll({
+    const user = await Target.findAll({
         include: [Deposits, Target],
         raw:true
     });
@@ -110,13 +106,11 @@ router.get("/dashboard", async (req, res) => {
         }
     }
     res.render("../views/dashboard.hbs", {
+        
         goal: savingsGoal,
+        // goal: Target,
         user: req.user
     });
-})
-router.get("/calc", (req, res) => {
-    // Making adjustments since a designated Calc file is not made yet
-    // res.render("../views/landing.hbs");
 })
 
 router.post("/update/:id",isAuthenticated,authenticate,async (req, res) => {
@@ -135,7 +129,7 @@ router.post("/update/:id",isAuthenticated,authenticate,async (req, res) => {
 }
 );
 
-router.get("/update/:id", authenticate, async (req, res) => {
+router.get("/update/:id", isAuthenticated, authenticate, async (req, res) => {
     try{
         const targetId = req.params.id
         const target = await Target.findByPk(targetId);
