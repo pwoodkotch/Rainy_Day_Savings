@@ -4,7 +4,7 @@
     "description": "The only application that you'll need to track your savings and potential investment opportunities!! (This application does not link to your bank account, and cannot  invest money for you.)",
     "main": "index.js",
     "scripts": {
-        "test": "npm i sequelize express mysql2 dotenv express-handlebars express-session --silent && cd DB && npm i nodemon -D && node db.js && cd .. ",
+        "test": "npm i sequelize express mysql2 dotenv express-handlebars express-session --silent && npm i nodemon -D && cd config && node db.js && cd .. ",
         "start": "nodemon server.js"
     },
     "author": "",

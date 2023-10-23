@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
-const db = require("../config/connetion.js");
+const db = require("../config/connection");
 
 class User extends Model {}
 
@@ -25,6 +25,7 @@ User.init(
         },
     },
     {
+        indexes:[{fields:['username']}],
         modelname: "user",
         sequelize: db,
         logging: false,
