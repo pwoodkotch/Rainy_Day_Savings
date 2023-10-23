@@ -4,7 +4,7 @@ const db = require("./config/connection.js");
 const { engine } = require("express-handlebars");
 
 const app = express();
-const PORT = process.env.PORT || 3333;
+const PORT = 3334;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
