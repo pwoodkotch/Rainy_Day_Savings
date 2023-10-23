@@ -1,15 +1,16 @@
 const router = require("express").Router();
 const path = require("path");
 const { User, Deposits, Target } = require('../Models/')
+// const hbs = require("../views/hbs/helpers")
 // auth page if user is logged in
 function loggedIn(req, res, next) {
     if(req.session.user_id) {
-        return res.redirect('/')
+        return res.redirect('/dashboard')
     }
     next()
 }
 // block a route if a user is not logged in
-function IsAuthenicated(req, res, next) {
+function isAuthenticated(req, res, next) {
     if(!req.session.user_id) {
         return res.redirect('/signup')
     }
@@ -32,6 +33,14 @@ router.get('/',(req,res)=>{
 // We will make adjustment to the names but temporarily its this
     res.render('savings-calc')
 })
+
+router.get('/addnew',(req,res)=>{
+        res.render('addNew')
+})
+
+router.get('/update',(req,res)=>{      
+        res.render('updateTarget')
+})
 // route for register form
 router.get('/signup', loggedIn, authenticate, (req, res) => {
     res.render('signUp', {
@@ -51,9 +60,10 @@ router.get('/login', loggedIn, authenticate, (req, res) => {
 router.get("/dashboard", async (req, res) => {
     const hi = 'hellothere'
     const user = await User.findAll({
-           include: [Deposits, Target],
-           raw:true
+        include: [Deposits, Target],
+        raw:true
     });
+    // console.log(user)
     let saveAmountA = 317;
     let targetAmountA = 500;
     let saveAmountB = 267;
@@ -99,7 +109,6 @@ router.get("/dashboard", async (req, res) => {
             completion: 100
         }
     }
-    console.log(user)
     res.render("../views/dashboard.hbs", {
         goal: savingsGoal,
         user: req.user
@@ -110,5 +119,48 @@ router.get("/calc", (req, res) => {
     // res.render("../views/landing.hbs");
 })
 
+router.post("/update/:id",isAuthenticated,authenticate,async (req, res) => {
+    try {
+        const target = await Target.findByPk(req.params.id);
+
+        target.setDataValue("title", req.body.titleUpdate);
+        target.setDataValue("text", req.body.textUpdate);
+        await target.save();
+
+        res.redirect("/dashboard");
+    } catch (error) {
+        req.session.errors = error.errors.map((errObj) => errObj.message);
+        res.render("updatePost", { errors: req.session.errors });
+    }
+}
+);
+
+router.get("/update/:id", authenticate, async (req, res) => {
+    try{
+        const targetId = req.params.id
+        const target = await Target.findByPk(targetId);
+    
+        res.render("update", { target });
+    }catch(error){
+        req.session.errors = error.errors.map((errObj) => errObj.message);
+        res.render("updatePost", { errors: req.session.errors });
+    }
+});
+
+router.delete("/delete/:id", isAuthenticated, authenticate, async (req, res) => {
+        try {
+            const targetId = req.params.id;
+            const target = await Post.findByPk(targetId);
+            await target.destroy();
+            res.render("dashboard");
+        } catch (error) {
+            const validationErrors = error.errors.map(
+                (errObj) => errObj.message
+            );
+            req.session.errors = validationErrors;
+            res.render("dashboard", { errors: req.session.errors });
+        }
+    }
+);
 
 module.exports = router;

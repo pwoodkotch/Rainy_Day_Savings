@@ -8,13 +8,13 @@ Deposits.init({
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    username: {
-        type:DataTypes.STRING,
-        references: {
-            model: "users",
-            key: "username",
-        },
-    },
+    // username: {
+    //     type:DataTypes.STRING,
+    //     references: {
+    //         model: "users",
+    //         key: "username",
+    //     },
+    // },
 },{
     modelName:'deposits',
     sequelize: db,

@@ -9,23 +9,23 @@ const deposittarget = require('./depositstarget.js')
 
 
 User.hasMany(Deposits,{
-    foreignKey:'id'
+    foreignKey:'user_id'
 })
 Deposits.belongsTo(User,{
-    foreignKey:'id'
+    foreignKey:'user_id'
 })
 User.hasMany(Target,{
-    foreignKey:'id'
+    foreignKey:'user_id'
 })
 Target.belongsTo(User,{
-    foreignKey:'id'
+    foreignKey:'user_id'
 })
 
 Target.hasMany(Deposits,{
-    foreignKey:'id'
+    foreignKey:'target_id'
 })
 Deposits.belongsTo(Target,{
-    foreignKey:'id'
+    foreignKey:'target_id'
 })
 //user has many targets
 // target has many deposits
