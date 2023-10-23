@@ -17,8 +17,10 @@ router.post('/signup',async (req,res)=>{
     try{
         const user = user.create(req.body)
         req.session.user_id =user.id
-
-    }catch{
+        res.redirect('/')
+    }catch(error){
+        req.session.errors = error.errors.map(errobj => errobj.message)
+        res.redirect('/signup')
 
     }
 })
