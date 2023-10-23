@@ -21,6 +21,21 @@ function setupToggle(buttonEl, navEl, toggleList) {
         }
     });
 }
+
+function setUpToggle1(buttonEl, navEl) {
+    buttonEl.addEventListener("click", function (event) {
+        event.preventDefault();
+         const isMdHidden = navEl.classList.contains("md:hidden");
+         if (isMdHidden) {
+             navEl.classList.remove("md:hidden");
+         } else { 
+             navEl.classList.add("md:hidden");
+         }
+    })
+}
+
+
+
 const mobileToggleClasses = ["hidden", "sm:hidden", "md:hidden"];
 const profileToggleClasses = [
     "absolute",
@@ -41,3 +56,4 @@ const profileToggleClasses = [
 
 setupToggle(mobileButton, mobileNavBar, mobileToggleClasses);
 setupToggle(profileButton, profileTabs, profileToggleClasses);
+// setUpToggle1(profileButton, profileTabs);

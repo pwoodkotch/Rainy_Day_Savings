@@ -2,6 +2,7 @@ const User = require('./user.js');
 const Deposits = require('./deposits.js');
 const Target = require('./target.js');
 const db = require("../config/connection");
+const deposittarget = require('./depositstarget.js')
 // const sequelize = require('../config/connection');
 
 
@@ -31,4 +32,4 @@ Deposits.belongsTo(Target,{
 //target belongs to user
 //deposits belong to user
 
-module.exports = {User,Deposits,Target}
+module.exports = {User,Deposits,Target,deposittarget}

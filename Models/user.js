@@ -18,11 +18,7 @@ User.init(
                     msg: "password must be more than 7 characters",
                 },
             },
-        },
-        income: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
+        }
     },
     {
         indexes:[{fields:['username']}],
