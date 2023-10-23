@@ -38,6 +38,6 @@ User.prototype.validatePass = async function(form_password){
     
     const is_valid = await compare(form_password.trim(), this.password.trim())
     return is_valid
-}
+} 
 
 module.exports = User;
