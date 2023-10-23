@@ -1,0 +1,82 @@
+{{#each goal}}
+{{#unless rainy}}
+<li class="flex justify-between gap-x-6 py-5">
+    <div class="flex min-w-0 gap-x-4">
+        <img
+            class="h-12 w-12 flex-none rounded-full bg-gray-50"
+        />
+        <div class="min-w-0 flex-auto">
+            <p
+                class="text-sm font-semibold leading-6 text-gray-900"
+            >
+                {{this.name}}
+            </p>
+            <p
+                class="mt-1 truncate text-xs leading-5 text-gray-500"
+            >
+                Started: {{this.startDate}}
+            </p>
+        </div>
+    </div>
+    <div
+        class="w-1/4 bg-gray-200 sm:flex rounded-full dark:bg-gray-700 h-4 my-4"
+    >
+        <div
+            class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+            style="width: {{this.completion}}%"
+        >
+            {{this.completion}}%
+        </div>
+    </div>
+    <div
+        class="hidden shrink-0 sm:flex sm:flex-col sm:items-end"
+    >
+        <p class="text-sm leading-6 text-gray-900">
+            ${{this.saved}}/{{this.target}} Needed
+        </p>
+        <p class="mt-1 text-xs leading-5 text-gray-500">
+            Last deposited {{this.timeOfUpdate}}
+        </p>
+    </div>
+</li>
+{{/unless}}
+{{#if rainy}}
+<li id="rainydayfund" class="flex justify-between gap-x-6 py-5">
+    <div class="flex min-w-0 gap-x-4">
+        <img
+            class="h-12 w-12 flex-none rounded-full bg-gray-50"
+        />
+        <div class="min-w-0 flex-auto">
+            <p
+                class="text-sm font-semibold leading-6 text-gray-900"
+            >
+                Rainy Day
+            </p>
+            <p
+                class="mt-1 truncate text-xs leading-5 text-gray-500"
+            >
+                Started: {{this.startDate}}
+            </p>
+        </div>
+    </div>
+    
+    <div
+        class="hidden shrink-0 sm:flex sm:flex-col sm:items-end"
+    >
+        <p class="text-sm leading-6 text-gray-900">${{this.saved}}</p>
+        <div class="mt-1 flex items-center gap-x-1.5">
+            <div
+                class="flex-none rounded-full bg-emerald-500/20 p-1"
+            >
+                <div
+                    class="h-1.5 w-1.5 rounded-full bg-emerald-500"
+                ></div>
+            </div>
+            <p class="text-xs leading-5 text-gray-500">
+                Last deposited {{this.timeOfUpdate}}
+            </p>
+        </div>
+    </div>
+{{/if}}
+{{/each}}
+</li>
