@@ -32,4 +32,4 @@ Deposits.belongsTo(Target,{
 //target belongs to user
 //deposits belong to user
 
-module.exports = {User,Deposits,Target,depositstarget};
+module.exports = {User,Deposits,Target,deposittarget};

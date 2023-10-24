@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const path = require("path");
-const { User, Deposits, Target } = require('../models/Index')
+const { User, Deposits, Target } = require('../models/Index');
+const sequelize = require("../config/connection");
 // const hbs = require("../views/hbs/helpers")
 // auth page if user is logged in
 function loggedIn(req, res, next) {
@@ -25,11 +26,28 @@ async function authenticate(req, res, next) {
             attributes: ['id', 'username']
         })
         req.user = user.get({ plain: true })
+        
     }
 
     next()
 }
+router.get('/', async (req, res) => {
+    const user = await User.findByPk(req.session.user_id)
+    // console.log(req.session)
+    if(user){
+    res.render('savings-calc',{
+        user:{
+             id: user.id,
+             name:user.username
 
+        }
+    })
+
+}else{
+    res.render('savings-calc')
+}
+
+})
 router.get('/addnew', isAuthenticated, authenticate, (req,res) => {
         res.render('addNew')
 })
@@ -53,12 +71,9 @@ router.get('/login', loggedIn, authenticate, (req, res) => {
     req.session.errors = []
 })
 
-router.get("/dashboard", async (req, res) => {
+router.get("/dashboard", authenticate, async (req, res) => {
     const hi = 'hellothere'
-    const user = await Target.findAll({
-        include: [Deposits, Target],
-        raw:true
-    });
+    
     // console.log(user)
     let saveAmountA = 317;
     let targetAmountA = 500;
@@ -105,12 +120,63 @@ router.get("/dashboard", async (req, res) => {
             completion: 100
         }
     }
+    if(req.session.user_id){
+        const targetList = await Target.findAll({ 
+            where: {user_id: req.session.user_id 
+            },raw:true
+        })
+            // console.log(targetList.id)
+            
+            const deposit = await Deposits.findAll({
+                where:{
+                    target_id:5
+                },
+                raw:true
+            })
+            let sum = 0
+            for(let x = 0; x < deposit.length; x++){
+                sum += deposit[x].deposit_amount
+                // console.log('deposit[x].deposit_amount',deposit[x].deposit_amount)
+            }
+            // console.log('sum', sum)
+            // console.log('deposit', deposit)
+        // console.log(targetList)
+    
+        // const targets = [];
+    
+        // targetList.forEach((item) => {
+        //     let data = item.dataValues;
+        //     savingsGoal.push({
+        //         name: data.name,
+        //         startDate: data.createdAt,
+        //         timeOfUpdate: data.updatedAt,
+        //         saved: data.saved,
+        //         target: data.target_amount,
+        //         completion: Math.floor(100 * (data.saved/data.target_amount))
+        //     })
+        // })
     res.render("../views/dashboard.hbs", {
         
-        goal: savingsGoal,
-        // goal: Target,
+        // goal: savingsGoal,
+        goal: targetList,
         user: req.user
     });
+}else{
+        const targets = await Target.findAll({})
+        res.render("../views/dashboard.hbs", {
+        
+            goal: savingsGoal,
+            // goal: targets,
+            user: req.user
+        });
+    
+    }
+    // res.render("../views/dashboard.hbs", {
+        
+        //     goal: savingsGoal,
+        //     // goal: targets,
+        //     user: req.user
+        // });
 })
 
 router.post("/update/:id",isAuthenticated,authenticate,async (req, res) => {
@@ -129,24 +195,19 @@ router.post("/update/:id",isAuthenticated,authenticate,async (req, res) => {
 }
 );
 
-router.get("/update/:id", isAuthenticated, authenticate, async (req, res) => {
-    try{
-        const targetId = req.params.id
-        const target = await Target.findByPk(targetId);
-    
-        res.render("update", { target });
-    }catch(error){
-        req.session.errors = error.errors.map((errObj) => errObj.message);
-        res.render("updatePost", { errors: req.session.errors });
-    }
-});
 
-router.delete("/delete/:id", isAuthenticated, authenticate, async (req, res) => {
+
+router.post("/delete/",async (req, res) => {
+
+    res.render("signup");
+})
+
+router.post("/delete/:id", isAuthenticated, authenticate, async (req, res) => {
         try {
             const targetId = req.params.id;
-            const target = await Post.findByPk(targetId);
+            const target = await Target.findByPk(targetId);
             await target.destroy();
-            res.render("dashboard");
+            res.redirect("/dashboard");
         } catch (error) {
             const validationErrors = error.errors.map(
                 (errObj) => errObj.message
@@ -156,5 +217,10 @@ router.delete("/delete/:id", isAuthenticated, authenticate, async (req, res) => 
         }
     }
 );
+
+router.get('/deposit',isAuthenticated, (req,res)=>{
+
+    res.render('deposit')
+})
 
 module.exports = router;
