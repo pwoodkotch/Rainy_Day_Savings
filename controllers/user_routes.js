@@ -1,7 +1,7 @@
 const router = require("express").Router();
 // const session = require("express-session");
 const viewroutes = require("./view_routes.js");
-const { User, Deposits, Target, depositstarget } = require('../models/Index.js');
+const { User, Deposits, Target } = require('../models');
 const { Sequelize } = require('sequelize')
 // const { findAll } = require("../models/User.js");
 // const User = require('../Models/user.js')
