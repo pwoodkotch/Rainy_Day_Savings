@@ -1,12 +1,7 @@
 const router = require("express").Router();
 const viewroutes = require("./view_routes.js");
 
-const {
-    User,
-    Deposits,
-    Target,
-    depositstarget,
-} = require("../models/Index.js");
+const { User, Deposits, Target, depositstarget,} = require("../models");
 const { Sequelize } = require("sequelize");
 
 router.post("/deposit", async (req, res) => {

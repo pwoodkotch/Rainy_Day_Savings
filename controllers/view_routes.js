@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const path = require("path");
-const { User, Deposits, Target } = require("../models/Index");
+const { User, Deposits, Target } = require("../models");
 const sequelize = require("../config/connection");
 
 // Authorize page if user is logged in
