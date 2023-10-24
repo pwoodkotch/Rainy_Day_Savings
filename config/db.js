@@ -1,6 +1,6 @@
 const sql = require("mysql2");
 const con = sql.createConnection({
-    host: "localhost",
+    host: process.env.DB_HOST,
     user: "root",
     password: "",
 });
