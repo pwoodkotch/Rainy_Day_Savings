@@ -12,6 +12,7 @@ This application allows you to plan ahead to reach your financial goals. Our upd
 - Node.js
 - MySQL Database
 - NPM (Node Package Manager)
+- Nodemon (Optional)
 
 ## Installation
 1. Clone this repository to your local machine.
@@ -20,13 +21,12 @@ This application allows you to plan ahead to reach your financial goals. Our upd
 4. Add your Mysql password to the .env file.
 
 ## Usage
-1. Open the Mysql shell and run:
--       source db/schema.sql
-2. Exit the Mysql shell.
-3. In the terminal run:
--       node seeds/index.js
-4. Finally in the terminal run:
--       npm run start
+1. Open the terminal to the project directory and run:
+-       node config/db.js
+2. Finally run:
+-       npm run start 
+    Or:
+-       node server.js
 
 ## Acknowledgments
 
