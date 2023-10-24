@@ -2,15 +2,52 @@ const router = require("express").Router();
 // const session = require("express-session");
 const viewroutes = require("./view_routes.js");
 const { User, Deposits, Target, depositstarget } = require('../models/Index.js');
+const { Sequelize } = require('sequelize')
 // const { findAll } = require("../models/User.js");
 // const User = require('../Models/user.js')
 // const Target = require('../Models/target.js')
 // const Deposits = require('../Models/deposits.js')
 
 router.post('/deposit', async (req,res)=>{
-
-   const dposits =  await Deposits.create(req.body)
-
+    const dept = req.session.user_id
+    console.log('dept', dept)
+   
+   const targetname = await Target.findAll({
+    where:{
+        name: req.body.name
+    },
+    raw:true
+   })
+   console.log('targetname',targetname)
+   const depositAmount = Number(req.body.deposit_amount)
+   const dposits =  await Deposits.create({
+    deposit_amount: req.body.deposit_amount,
+    user_id: req.session.user_id,
+    target_id: targetname[0].id  
+   })
+//    console.log(dposits.target_id)
+   const target = await Target.findByPk(dposits.target_id)
+   console.log('deposit amount', typeof depositAmount)
+//    console.log(target)
+   const targetsaved = target.saved + depositAmount
+   
+   await Target.update({
+    saved: targetsaved
+   },{
+    where:{
+        id:dposits.target_id
+    }
+   })
+   await Target.update({
+    
+        completion: Sequelize.literal('FLOOR(100 * saved / target_amount)')
+    
+   },{
+    where:{
+        id: dposits.target_id
+    }
+   })
+   res.redirect('/dashboard')
     // if (req.body.username){
     //     const userarr = req.body.username
     //     const user = await User.findAll({
@@ -25,19 +62,17 @@ router.post('/deposit', async (req,res)=>{
 router.post('/target', async (req,res)=>{
 
     const target =  await Target.create(req.body)
+    res.redirect('/dashboard')
  
      
  });
 router.post('/signup',async (req,res)=>{
     try{
         const user = await User.create(req.body);
-        console.log("USER:",user);
         req.session.user_id = user.id;
         const examp = req.session.user;
         // req.session.user = user;
-        console.log("SESSION ID:", examp);
         req.session.save(() => {
-            console.log("AFTER:", req.session.user_id);
             res.redirect('/dashboard');
         });
  
@@ -64,7 +99,7 @@ router.post('/login', async (req, res) => {
         req.session.errors = ['Password is incorrect.']
         return res.redirect('/login')
     }
-    console.log('hi')
+    // console.log('hi')
     req.session.user_id = user.id
     if(user){
 
@@ -74,18 +109,28 @@ router.post('/login', async (req, res) => {
 });
 
 
+router.post("/calc", async (req,res) => {
+    const amount = req.body.amountWeek;
+    const goal = req.body.goalAmmount;
+
+    const monthAmount = amount * 4;
+
+    res.render("savings-calc", {monthAmount, amount});
+})
+
 router.post('/addnew', async (cro,sro)=>{
     // console.log(cro.session)
+    
     const user = await User.findOne({
         where: {
             id: cro.session.user_id
         }
     })
-    console.log(user)
-    console.log(cro.body)
-    let started =1
-    let saved = 0
-    let completion = 0
+    // console.log(user)
+    // console.log(cro.body)
+    let started = 1
+    let saved = 1
+    let completion = 1
     const targets = await Target.create({
         target_amount: cro.body.target_amount,
         name: cro.body.name,
@@ -119,7 +164,7 @@ router.get('/testing',async (cro,sro)=>{
 });
 
 router.get("/logout", (req,res) => {
-    req.session.destroy;
+    req.session.destroy();
     res.redirect("/");
 });
 
