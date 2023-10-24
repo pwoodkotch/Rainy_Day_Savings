@@ -1,86 +1,83 @@
 const router = require("express").Router();
 const path = require("path");
-const { User, Deposits, Target } = require('../models/Index');
+const { User, Deposits, Target } = require("../models/Index");
 const sequelize = require("../config/connection");
-// const hbs = require("../views/hbs/helpers")
-// auth page if user is logged in
+
+// Authorize page if user is logged in
 function loggedIn(req, res, next) {
-    if(req.session.user_id) {
-        return res.redirect('/dashboard')
+    if (req.session.user_id) {
+        return res.redirect("/dashboard");
     }
-    next()
+    next();
 }
-// block a route if a user is not logged in
+// Block a route if a user is not logged in
 function isAuthenticated(req, res, next) {
-    if(!req.session.user_id) {
-        return res.redirect('/signup')
+    if (!req.session.user_id) {
+        return res.redirect("/signup");
     }
-    next()
+    next();
 }
 // Attach user data to the request if they are logged in
 async function authenticate(req, res, next) {
-    const user_id = req.session.user_id
+    const user_id = req.session.user_id;
 
-    if(user_id) {
+    if (user_id) {
         const user = await User.findByPk(req.session.user_id, {
-            attributes: ['id', 'username']
-        })
-        req.user = user.get({ plain: true })
-        
+            attributes: ["id", "username"],
+        });
+        req.user = user.get({ plain: true });
     }
 
-    next()
+    next();
 }
-router.get('/', async (req, res) => {
-    const user = await User.findByPk(req.session.user_id)
-    // console.log(req.session)
-    if(user){
-    res.render('savings-calc',{
-        user:{
-             id: user.id,
-             name:user.username
+router.get("/", async (req, res) => {
+    const user = await User.findByPk(req.session.user_id);
+    if (user) {
+        res.render("landing", {
+            user: {
+                id: user.id,
+                name: user.username,
+            },
+        });
+    } else {
+        res.render("landing");
+    }
+});
+router.get("/addnew", isAuthenticated, authenticate, (req, res) => {
+    res.render("addNew");
+});
 
-        }
-    })
+router.get("/savings-calc", isAuthenticated, authenticate, (req, res) => {
+    res.render("savings-calc");
+});
 
-}else{
-    res.render('savings-calc')
-}
+router.get("/update", isAuthenticated, authenticate, (req, res) => {
+    res.render("updateTarget");
+});
 
-})
-router.get('/addnew', isAuthenticated, authenticate, (req,res) => {
-        res.render('addNew')
-})
-
-router.get('/update', isAuthenticated, authenticate, (req,res)=>{      
-        res.render('updateTarget')
-})
-// route for register form
-router.get('/signup', loggedIn, authenticate, (req, res) => {
-    res.render('signUp', {
+// Route for sign up form
+router.get("/signup", loggedIn, authenticate, (req, res) => {
+    res.render("signUp", {
         errors: req.session.errors,
-        user: req.user
-    })
-    req.session.errors = []
-})
-router.get('/login', loggedIn, authenticate, (req, res) => {
-    res.render('login', {
+        user: req.user,
+    });
+    req.session.errors = [];
+});
+router.get("/login", loggedIn, authenticate, (req, res) => {
+    res.render("login", {
         errors: req.session.errors,
-        user: req.user
-    })
-    req.session.errors = []
-})
+        user: req.user,
+    });
+    req.session.errors = [];
+});
 
 router.get("/dashboard", authenticate, async (req, res) => {
-    const hi = 'hellothere'
-    
-    // console.log(user)
     let saveAmountA = 317;
     let targetAmountA = 500;
     let saveAmountB = 267;
     let targetAmountB = 900;
-    let completionPercentA = Math.floor(100 * saveAmountA/targetAmountA)
-    let completionPercentB = Math.floor(100 * saveAmountB/targetAmountB)
+    let completionPercentA = Math.floor((100 * saveAmountA) / targetAmountA);
+    let completionPercentB = Math.floor((100 * saveAmountB) / targetAmountB);
     const savingsGoal = {
         firstGoal: {
             name: "Bike Fund",
@@ -88,7 +85,7 @@ router.get("/dashboard", authenticate, async (req, res) => {
             timeOfUpdate: "3h ago",
             saved: saveAmountA,
             target: targetAmountA,
-            completion: completionPercentA
+            completion: completionPercentA,
         },
         secondGoal: {
             name: "New Computer",
@@ -96,7 +93,7 @@ router.get("/dashboard", authenticate, async (req, res) => {
             timeOfUpdate: "9h ago",
             saved: saveAmountB,
             target: targetAmountB,
-            completion: completionPercentB
+            completion: completionPercentB,
         },
         thirdGoal: {
             name: "New Computer",
@@ -104,82 +101,53 @@ router.get("/dashboard", authenticate, async (req, res) => {
             timeOfUpdate: "9h ago",
             saved: saveAmountB,
             target: targetAmountB,
-            completion: completionPercentB
+            completion: completionPercentB,
         },
         backupA: {
             name: "Rent Backup",
             startDate: "Today",
             timeOfUpdate: "2h ago",
-            saved: 700
+            saved: 700,
         },
         rainyDayFund: {
             name: "For a Rainy Day",
             startDate: "Today",
             timeOfUpdate: "3h ago",
             saved: 900,
-            completion: 100
-        }
-    }
-    if(req.session.user_id){
-        const targetList = await Target.findAll({ 
-            where: {user_id: req.session.user_id 
-            },raw:true
-        })
-            // console.log(targetList.id)
-            
-            const deposit = await Deposits.findAll({
-                where:{
-                    target_id:5
-                },
-                raw:true
-            })
-            let sum = 0
-            for(let x = 0; x < deposit.length; x++){
-                sum += deposit[x].deposit_amount
-                // console.log('deposit[x].deposit_amount',deposit[x].deposit_amount)
-            }
-            // console.log('sum', sum)
-            // console.log('deposit', deposit)
-        // console.log(targetList)
-    
-        // const targets = [];
-    
-        // targetList.forEach((item) => {
-        //     let data = item.dataValues;
-        //     savingsGoal.push({
-        //         name: data.name,
-        //         startDate: data.createdAt,
-        //         timeOfUpdate: data.updatedAt,
-        //         saved: data.saved,
-        //         target: data.target_amount,
-        //         completion: Math.floor(100 * (data.saved/data.target_amount))
-        //     })
-        // })
-    res.render("../views/dashboard.hbs", {
-        
-        // goal: savingsGoal,
-        goal: targetList,
-        user: req.user
-    });
-}else{
-        const targets = await Target.findAll({})
-        res.render("../views/dashboard.hbs", {
-        
-            goal: savingsGoal,
-            // goal: targets,
-            user: req.user
+            completion: 100,
+        },
+    };
+    if (req.session.user_id) {
+        const targetList = await Target.findAll({
+            where: { user_id: req.session.user_id },
+            raw: true,
         });
-    
-    }
-    // res.render("../views/dashboard.hbs", {
-        
-        //     goal: savingsGoal,
-        //     // goal: targets,
-        //     user: req.user
-        // });
-})
 
-router.post("/update/:id",isAuthenticated,authenticate,async (req, res) => {
+        const deposit = await Deposits.findAll({
+            where: {
+                target_id: 5,
+            },
+            raw: true,
+        });
+        let sum = 0;
+        for (let x = 0; x < deposit.length; x++) {
+            sum += deposit[x].deposit_amount;
+        }
+
+        res.render("../views/dashboard.hbs", {
+            goal: targetList,
+            user: req.user,
+        });
+    } else {
+        const targets = await Target.findAll({});
+        res.render("../views/dashboard.hbs", {
+            goal: savingsGoal,
+            user: req.user,
+        });
+    }
+});
+
+router.post("/update/:id", isAuthenticated, authenticate, async (req, res) => {
     try {
         const target = await Target.findByPk(req.params.id);
 
@@ -192,35 +160,27 @@ router.post("/update/:id",isAuthenticated,authenticate,async (req, res) => {
         req.session.errors = error.errors.map((errObj) => errObj.message);
         res.render("updatePost", { errors: req.session.errors });
     }
-}
-);
+});
 
-
-
-router.post("/delete/",async (req, res) => {
-
+router.post("/delete/", async (req, res) => {
     res.render("signup");
-})
+});
 
 router.post("/delete/:id", isAuthenticated, authenticate, async (req, res) => {
-        try {
-            const targetId = req.params.id;
-            const target = await Target.findByPk(targetId);
-            await target.destroy();
-            res.redirect("/dashboard");
-        } catch (error) {
-            const validationErrors = error.errors.map(
-                (errObj) => errObj.message
-            );
-            req.session.errors = validationErrors;
-            res.render("dashboard", { errors: req.session.errors });
-        }
+    try {
+        const targetId = req.params.id;
+        const target = await Target.findByPk(targetId);
+        await target.destroy();
+        res.redirect("/dashboard");
+    } catch (error) {
+        const validationErrors = error.errors.map((errObj) => errObj.message);
+        req.session.errors = validationErrors;
+        res.render("dashboard", { errors: req.session.errors });
     }
-);
+});
 
-router.get('/deposit',isAuthenticated, (req,res)=>{
-
-    res.render('deposit')
-})
+router.get("/deposit", isAuthenticated, (req, res) => {
+    res.render("deposit");
+});
 
 module.exports = router;
