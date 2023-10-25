@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const path = require("path");
-const { User, Deposits, Target } = require("../models/Index");
+const { User, Deposits, Target } = require("../models");
 const sequelize = require("../config/connection");
 
 // Authorize page if user is logged in
@@ -147,21 +147,6 @@ router.get("/dashboard", authenticate, async (req, res) => {
     }
 });
 
-router.post("/update/:id", isAuthenticated, authenticate, async (req, res) => {
-    try {
-        const target = await Target.findByPk(req.params.id);
-
-        target.setDataValue("title", req.body.titleUpdate);
-        target.setDataValue("text", req.body.textUpdate);
-        await target.save();
-
-        res.redirect("/dashboard");
-    } catch (error) {
-        req.session.errors = error.errors.map((errObj) => errObj.message);
-        res.render("updatePost", { errors: req.session.errors });
-    }
-});
-
 router.post("/delete/", async (req, res) => {
     res.render("signup");
 });
@@ -180,7 +165,11 @@ router.post("/delete/:id", isAuthenticated, authenticate, async (req, res) => {
 });
 
 router.get("/deposit", isAuthenticated, (req, res) => {
-    res.render("deposit");
+    res.render("deposit", {
+        errors: req.session.errors,
+        user: req.user,
+    });
+    req.session.errors = [];
 });
 
 module.exports = router;

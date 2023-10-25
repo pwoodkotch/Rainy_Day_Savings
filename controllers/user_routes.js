@@ -1,58 +1,59 @@
 const router = require("express").Router();
 const viewroutes = require("./view_routes.js");
 
-const {
-    User,
-    Deposits,
-    Target,
-    depositstarget,
-} = require("../models/Index.js");
+const { User, Deposits, Target, depositstarget } = require("../models");
 const { Sequelize } = require("sequelize");
 
 router.post("/deposit", async (req, res) => {
-    const dept = req.session.user_id;
-    console.log("dept", dept);
+    try {
+        const dept = req.session.user_id;
 
-    const targetname = await Target.findAll({
-        where: {
-            name: req.body.name,
-        },
-        raw: true,
-    });
-    console.log("targetname", targetname);
-    const depositAmount = Number(req.body.deposit_amount);
-    const dposits = await Deposits.create({
-        deposit_amount: req.body.deposit_amount,
-        user_id: req.session.user_id,
-        target_id: targetname[0].id,
-    });
-
-    const target = await Target.findByPk(dposits.target_id);
-    console.log("deposit amount", typeof depositAmount);
-
-    const targetsaved = target.saved + depositAmount;
-
-    await Target.update(
-        {
-            saved: targetsaved,
-        },
-        {
+        const targetname = await Target.findAll({
             where: {
-                id: dposits.target_id,
+                name: req.body.name,
+                user_id: dept,
             },
-        }
-    );
-    await Target.update(
-        {
-            completion: Sequelize.literal("FLOOR(100 * saved / target_amount)"),
-        },
-        {
-            where: {
-                id: dposits.target_id,
+            raw: true,
+        });
+
+        const depositAmount = Number(req.body.deposit_amount);
+        const dposits = await Deposits.create({
+            deposit_amount: req.body.deposit_amount,
+            user_id: req.session.user_id,
+            target_id: targetname[0].id,
+        });
+
+        const target = await Target.findByPk(dposits.target_id);
+
+        const targetsaved = target.saved + depositAmount;
+
+        await Target.update(
+            {
+                saved: targetsaved,
             },
-        }
-    );
-    res.redirect("/dashboard");
+            {
+                where: {
+                    id: dposits.target_id,
+                },
+            }
+        );
+        await Target.update(
+            {
+                completion: Sequelize.literal(
+                    "FLOOR(100 * saved / target_amount)"
+                ),
+            },
+            {
+                where: {
+                    id: dposits.target_id,
+                },
+            }
+        );
+        res.redirect("/dashboard");
+    } catch (error) {
+        req.session.errors = ["Invalid Goal Name."];
+        res.redirect("/deposit");
+    }
 });
 router.post("/target", async (req, res) => {
     const target = await Target.create(req.body);
@@ -68,7 +69,7 @@ router.post("/signup", async (req, res) => {
             res.redirect("/dashboard");
         });
     } catch (error) {
-        req.session.errors = error.errors.map((errobj) => errobj.message);
+        req.session.errors = ["Password must contain atleast 7 characters."];
         res.redirect("/signup");
     }
 });
@@ -80,7 +81,6 @@ router.post("/login", async (req, res) => {
     });
     if (!user) {
         req.session.errors = ["No user with that username was found."];
-        console.log("not user");
         return res.redirect("/login");
     }
     const valid_pass = await user.validatePass(req.body.password);
@@ -140,9 +140,9 @@ router.post("/addnew", async (cro, sro) => {
         completion: completion,
         user_id: cro.session.user_id,
     });
-    console.log(targets);
     sro.redirect("/dashboard");
 });
+
 router.get("/testing", async (cro, sro) => {
     const hi = "hithere";
     console.log("cro", cro.session.user_id);

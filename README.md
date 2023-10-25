@@ -1,6 +1,8 @@
 # Rainy Day Savings
-This application allows you to plan ahead to reach your financial goals. Our updated deposit monitoring system will help you to stay consistent and monitor your progress towards your goal. 
 
+![App Screenshot](<images/Screenshot (15).png>)
+
+This application allows you to plan ahead to reach your financial goals. Our updated deposit monitoring system will help you to stay consistent and monitor your progress towards your goal. [Website Link](https://warm-sierra-48394-43a7b3f089e9.herokuapp.com/)
 - [Prerequisites](#features)
 - [Installation](#installation)
 - [Usage](#usage)
